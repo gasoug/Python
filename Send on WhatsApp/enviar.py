@@ -4,14 +4,13 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import urllib
-import pyautogui as aut
 import PySimpleGUI as sg
 
 def send(locale):
     contacts_df = pd.read_excel(locale)
     browser = webdriver.Chrome(executable_path=r".\chromedriver.exe")
     browser.get("https://web.whatsapp.com/")
-    text = "você já foi cliente nosso, e trago uma oferta especial e exclusiva para você voltar a treinar com a gente. Quer saber mais a respeito? Tô esperando sua resposta viu !"
+    text = "você já foi cliente nosso, e trago uma oferta especial e exclusiva para você!"
 
     while len(browser.find_elements_by_id("side")) < 1:
         time.sleep(1)
@@ -23,20 +22,11 @@ def send(locale):
         browser.get(link)
         while len(browser.find_elements_by_id("side")) < 1:
             time.sleep(1)
-        aut.moveTo(x=665, y=675)    
-        aut.click()
-        aut.write(':apa')
-        aut.press('enter')    
-        aut.moveTo(x=1106, y=698)    
-        aut.click()
-        aut.write(':se')
-        aut.press('enter')
-        time.sleep(3)
         browser.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[2]').send_keys(Keys.ENTER)
         time.sleep(4) 
 
 def main():
-    cross_clean = {'BACKGROUND': '#000000',
+    my_theme = {'BACKGROUND': '#000000',
                     'TEXT': '#94E81C',
                     'INPUT': '#212121',
                     'TEXT_INPUT': '#ffffff',
@@ -48,7 +38,7 @@ def main():
                     'PROGRESS_DEPTH': 0}
 
     # Add your dictionary to the PySimpleGUI themes
-    sg.theme_add_new('MyNewTheme', cross_clean)  
+    sg.theme_add_new('MyNewTheme', my_theme)  
     sg.theme('My New Theme')
     font = ("Arial,12")
 
@@ -66,7 +56,7 @@ def main():
             break
         if event == 'Enviar':
             arquivo = values["-file-"]
-            window["-complete-"].update("Mensagens enviadas com sucesso!")
+            window["-complete-"].update("Message sent successfully!")
             send(arquivo)
             #print(arquivo)  
     window.close()
