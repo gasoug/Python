@@ -10,13 +10,13 @@ def send(locale):
     contacts_df = pd.read_excel(locale)
     browser = webdriver.Chrome(executable_path=r".\chromedriver.exe")
     browser.get("https://web.whatsapp.com/")
-    text = "você já foi cliente nosso, e trago uma oferta especial e exclusiva para você!"
+    text = "Você já foi cliente nosso, e trago uma oferta especial e exclusiva para você!"
 
     while len(browser.find_elements_by_id("side")) < 1:
         time.sleep(1)
     aut.hotkey('win','up')
     for i, nome in enumerate(contacts_df["Nome"]):
-        message = urllib.parse.quote(f"Oi sumida tudo bem ? Rsrs. {nome}, {text}")
+        message = urllib.parse.quote(f"Olá {nome}, tudo bem ? {text}")
         num = contacts_df.loc[i, "Número"]
         link = f"https://web.whatsapp.com/send?phone={num}&text={message}"
         browser.get(link)
